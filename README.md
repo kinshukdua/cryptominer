@@ -3,7 +3,7 @@
 
 This repository contains the source code for the barebones implementation of a cryptocurrency miner that can be ported to almost any IoT device. 
 
-The repository is divided into 3 folders- 
+The repository is divided into 2 folders- 
 
 1. Implementation - Containing the complete source code that can be modified to run on any platform by using platform specific functions. 
 
