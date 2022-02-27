@@ -1,5 +1,26 @@
 #include "util.h"
 
+void *_memset(void *s, int c,  unsigned int len)
+{
+    unsigned char* p=s;
+    while(len--)
+    {
+        *p++ = (unsigned char)c;
+    }
+    return s;
+}
+
+void _memcpy(void *dest, void *src, size_t n)
+{
+   // Typecast src and dest addresses to (char *)
+   char *csrc = (char *)src;
+   char *cdest = (char *)dest;
+  
+   // Copy contents of src[] to dest[]
+   for (int i=0; i<n; i++)
+       cdest[i] = csrc[i];
+}
+
 // convert from big endian to little endian in place
 void big2little (uint8_t * str_big_end)
 {

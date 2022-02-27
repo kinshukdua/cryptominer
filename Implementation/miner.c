@@ -33,10 +33,10 @@ void build_merkle_root(struct Job job, uint8_t root[32])
     uint8_t coinbase_hash_bin[32];
     // concatonate coinb1 + extranonce1 + extranonce2 + coinb2
     uint8_t coinbase_bin[job.coinb1.size + 4 + 4 + job.coinb2.size];
-    memcpy(coinbase_bin, job.coinb1.data, job.coinb1.size);
-    memcpy(coinbase_bin + job.coinb1.size, &job.extranonce.extranonce1, 4);
-    memcpy(coinbase_bin + job.coinb1.size + 4, &job.extranonce.extranonce2, 4);
-    memcpy(coinbase_bin + job.coinb1.size + 4 + 4, job.coinb2.data, job.coinb2.size);
+    _memcpy(coinbase_bin, job.coinb1.data, job.coinb1.size);
+    _memcpy(coinbase_bin + job.coinb1.size, &job.extranonce.extranonce1, 4);
+    _memcpy(coinbase_bin + job.coinb1.size + 4, &job.extranonce.extranonce2, 4);
+    _memcpy(coinbase_bin + job.coinb1.size + 4 + 4, job.coinb2.data, job.coinb2.size);
     // build coinbase_hash_bin
     sha256(coinbase_bin, job.coinb1.size + 4 + 4 + job.coinb2.size, coinbase_hash_bin2);
     sha256(coinbase_hash_bin2, 32, coinbase_hash_bin);
@@ -45,12 +45,12 @@ void build_merkle_root(struct Job job, uint8_t root[32])
     // find merkle_root
     uint8_t merkle_root2[64];
     uint8_t merkle_root[64];
-    memcpy(merkle_root, coinbase_hash_bin, 32);
+    _memcpy(merkle_root, coinbase_hash_bin, 32);
     // loop over size of merkle_tree
     for (int i = 0; i < job.merkle_tree.size; i++)
     {
         // conctonate merkle_root and hashes[i]
-        memcpy(merkle_root+32, job.merkle_tree.hashes[i], 32);
+        _memcpy(merkle_root+32, job.merkle_tree.hashes[i], 32);
         // calculate double sha256
         sha256(merkle_root2, 64, merkle_root);
         sha256(merkle_root, 32, merkle_root2);
@@ -68,11 +68,11 @@ int receive_block_header(struct Job job, unsigned char *header) {
     build_merkle_root(job,merkle_root);
     big2little(merkle_root);
     // concatenate version, prevhash, merkle_root, ntime, nbits to header
-    memcpy(header, &job.version, 4);
-    memcpy(header+4, job.prev_hash, 32);
-    memcpy(header+36, merkle_root, 32);
-    memcpy(header+68, &job.ntime, 4);
-    memcpy(header+72, &job.nbits, 4);
+    _memcpy(header, &job.version, 4);
+    _memcpy(header+4, job.prev_hash, 32);
+    _memcpy(header+36, merkle_root, 32);
+    _memcpy(header+68, &job.ntime, 4);
+    _memcpy(header+72, &job.nbits, 4);
 
 
     return 0;
@@ -80,10 +80,10 @@ int receive_block_header(struct Job job, unsigned char *header) {
 
 
 int receive_block_data_test(unsigned char *block_header, unsigned char *target) {
-    memset(block_header, 0x11, 76);
-    memset(target,0x00,2);
-    memset(target+2,0xFF,4);
-    memset(target+6,0x00,26);
+    _memset(block_header, 0x11, 76);
+    _memset(target,0x00,2);
+    _memset(target+2,0xFF,4);
+    _memset(target+6,0x00,26);
     return 0;
 }  
 
@@ -91,7 +91,7 @@ int mine_nonce(unsigned char *block_header, unsigned char *target, uint32_t *non
     uint32_t nonce = 0;
     while(1) {
         // Append nonce
-        memcpy(&block_header[76], &nonce, 4);
+        _memcpy(&block_header[76], &nonce, 4);
         // Increase nonce
         nonce++;
         uint8_t hash_rev[32];

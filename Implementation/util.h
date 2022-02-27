@@ -3,6 +3,9 @@
 #include <stdio.h>
 #include <string.h>
 
+void *_memset(void *s, int c,  unsigned int len);
+
+void _memcpy(void *dest, void *src, size_t n);
 
 void big2little (uint8_t * str_big_end);
 
