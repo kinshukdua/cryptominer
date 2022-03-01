@@ -19,9 +19,7 @@ The repository is divided into 2 folders-
 * **Arduino IDE** (for testing on arduino/esp32)
 
 ### C libraries required
-* (OPTIONAL) **stdint.h** (or change datatypes from `uint32_t` to `unsigned long`.)
-* (OPTIONAL) **string.h** (or change `memset` and `memcpy` to platform specific memory managment calls.)
-
+* (OPTIONAL) **stdint.h** (or change datatypes from `uint32_t` to `unsigned long` and `uint8_t` to `unsigned char`)
 
 ## Running the Implementation
 1. Move to the `Implementation` folder.
